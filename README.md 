@@ -5,7 +5,6 @@ This is a simple banking application that allows users to deposit, withdraw, and
 ## Prerequisites
 
 - Node.js installed on your machine
-- MongoDB installed and running locally
 
 ## Installation
 
@@ -21,13 +20,45 @@ https://github.com/leon-bi/Bank.git
 
 This will start the Express server at `http://localhost:3000`.
 
-5. Open your web browser and go to `http://localhost:3000` to access the application.
+5. Open the HTML(index.html) file with your browser to access the application.
 
-Also use Postman to see the actual logic if its not working
+Kindly use tools like Postman or Thunder Client to test the provided REST API endpoints:
 
-http://localhost:3000/deposit
-http://localhost:3000/withdraw
-http://localhost:3000/balance
+- http://localhost:3000/deposit
+- http://localhost:3000/withdraw
+- http://localhost:3000/balance
+
+1. **Deposit Endpoint:**
+   - **Method:** POST
+   - **URL:** `http://localhost:3000/deposit`
+   - **Request Body:** JSON object with the following structure:
+     ```json
+     {
+         "amount": 500
+     }
+     ```
+     Replace `500` with the amount you want to deposit.
+   - This endpoint deposits the specified amount into the user's account.
+
+2. **Withdraw Endpoint:**
+   - **Method:** POST
+   - **URL:** `http://localhost:3000/withdraw`
+   - **Request Body:** JSON object with the following structure:
+     ```json
+     {
+         "amount": 200
+     }
+     ```
+     Replace `200` with the amount you want to withdraw.
+   - This endpoint withdraws the specified amount from the user's account.
+
+3. **Balance Endpoint:**
+   - **Method:** GET
+   - **URL:** `http://localhost:3000/balance`
+   - This endpoint returns the current balance of the user's account.
+
+
+
 
 ## Usage
 
@@ -41,9 +72,6 @@ http://localhost:3000/balance
 - Click the "Withdraw" button.
 - The specified amount will be deducted from your balance.
 
-3. Check Balance:
-- Click the "Check Balance" button.
-- Your current balance will be displayed.
 
 ## Contributing
 
