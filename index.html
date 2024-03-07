@@ -1,0 +1,133 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking App</title>
+</head>
+<body>
+    <h1>Welcome to the Banking App</h1>
+    <div>
+        <button onclick="deposit(500)">Deposit $500</button>
+        <button onclick="withdraw(200)">Withdraw $200</button>
+        <button onclick="checkBalance()">Check Balance</button>
+    </div>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        // Base URL of your server
+        const baseURL = "http://localhost:3000";
+
+        // Function to deposit money
+        async function deposit(amount) {
+            try {
+                const response = await axios.post(`${baseURL}/deposit`, { amount });
+                console.log(response.data);
+            } catch (error) {
+                console.error(error.response.data.error);
+            }
+        }
+
+        // Function to check balance
+        async function checkBalance() {
+            try {
+                const response = await axios.get(`${baseURL}/balance`);
+                console.log(response.data);
+            } catch (error) {
+                console.error(error.response.data.error);
+            }
+        }
+
+        // Function to withdraw money
+        async function withdraw(amount) {
+            try {
+                const response = await axios.post(`${baseURL}/withdraw`, { amount });
+                console.log(response.data);
+            } catch (error) {
+                console.error(error.response.data.error);
+            }
+        }
+    </script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking App</title>
+</head>
+<body>
+    <h1>Welcome to the Banking App</h1>
+    
+    <div id="currentAmount"></div>
+    <!-- Deposit Form -->
+    <form id="depositForm" onsubmit="handleDeposit(event)">
+        <label for="depositAmount">Deposit Amount:</label>
+        <input type="number" id="depositAmount" name="depositAmount" required>
+        <button type="submit">Deposit</button>
+    </form>
+
+    <!-- Withdraw Form -->
+    <form id="withdrawForm" onsubmit="handleWithdraw(event)">
+        <label for="withdrawAmount">Withdraw Amount:</label>
+        <input type="number" id="withdrawAmount" name="withdrawAmount" required>
+        <button type="submit">Withdraw</button>
+    </form>
+
+    <!-- Check Balance Form -->
+    <form id="checkBalanceForm" onsubmit="handleCheckBalance(event)">
+        <button type="submit">Check Balance</button>
+    </form>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        // Base URL of your server
+        const baseURL = "http://localhost:3000";
+
+        // Function to handle deposit form submission
+        async function handleDeposit(event) {
+            event.preventDefault();
+            const depositAmount = document.getElementById('depositAmount').value;
+            console.log(depositAmount)
+            try {
+                const response = await axios.post(`${baseURL}/deposit`, { amount: depositAmount });
+                console.log(response.data);
+                // Clear input field after successful deposit
+                document.getElementById('depositAmount').value = '';
+            } catch (error) {
+                console.error(error.response.data.error);
+            }
+        }
+
+        // Function to handle withdraw form submission
+        async function handleWithdraw(event) {
+            event.preventDefault();
+            const withdrawAmount = document.getElementById('withdrawAmount').value;
+            try {
+                const response = await axios.post(`${baseURL}/withdraw`, { amount: withdrawAmount });
+                console.log(response.data);
+            } catch (error) {
+                console.error(error.response.data.error);
+            }
+        }
+
+        // Function to handle check balance form submission
+        async function handleCheckBalance(event) {
+            event.preventDefault();
+            try {
+                const response = await axios.get(`${baseURL}/balance`);
+                console.log(response.data);
+            } catch (error) {
+                console.error(error.response.data.error);
+            }
+        }
+
+        // Function to update displayed amount
+        function updateDisplayedAmount(amount) {
+            document.getElementById('currentAmount').textContent = `Current Amount: $${amount}`;
+        }
+    </script>
+</body>
+</html>
