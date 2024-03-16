@@ -1,0 +1,142 @@
+<!-- <!DOCTYPE html>
+<html>
+  <head>
+    <title>Home Page</title>
+  </head>
+  <body>
+    <h1>Welcome to the Home Page</h1>
+    <p>This is some content for the home page.</p>
+    <div>
+      <h2>Current Balance: <%= balance %></h2>
+  </div>
+  </body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank App</title>
+    <style>
+      body {
+          font-family: Arial, sans-serif;
+          background-color: #f0f0f0;
+          margin: 0;
+          padding: 0;
+      }
+      .container {
+          max-width: 600px;
+          margin: 50px auto;
+          padding: 20px;
+          background-color: #fff;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+          text-align: center;
+          color: #333;
+      }
+      h2 {
+          margin-top: 20px;
+          color: #555;
+      }
+      form {
+          margin-top: 20px;
+      }
+      label {
+          display: block;
+          margin-bottom: 10px;
+          color: #777;
+      }
+      input[type="number"] {
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          box-sizing: border-box;
+      }
+      button[type="submit"] {
+          display: block;
+          width: 100%;
+          padding: 10px;
+          background-color: #4caf50;
+          color: #fff;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+      }
+      button[type="submit"]:hover {
+          background-color: #45a049;
+      }
+  </style>
+</head>
+<body>
+    <h1>Bank App</h1>
+    
+    <div>
+        <h2>Current Balance: <%= balance %></h2>
+    </div>
+
+    <form action="/" method="post">
+        <label for="depositAmount">Deposit Amount:</label>
+        <input type="number" id="depositAmount" name="depositAmount" required>
+        <button type="submit">Deposit</button>
+    </form>
+
+    <form action="/withdraw" method="post">
+        <label for="withdrawAmount">Withdraw Amount:</label>
+        <input type="number" id="withdrawAmount" name="withdrawAmount" required>
+        <button type="submit">Withdraw</button>
+    </form>
+</body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    // Base URL of your server
+    const baseURL = "http://localhost:3000";
+
+    // Function to handle deposit form submission
+    async function handleDeposit(event) {
+        event.preventDefault();
+        const depositAmount = document.getElementById('depositAmount').value;
+        console.log(depositAmount)
+        try {
+            const response = await axios.post(`${baseURL}/deposit`, { amount: depositAmount });
+            console.log(response.data);
+            // Clear input field after successful deposit
+            document.getElementById('depositAmount').value = '';
+        } catch (error) {
+            console.error(error.response.data.error);
+        }
+    }
+
+    // Function to handle withdraw form submission
+    async function handleWithdraw(event) {
+        event.preventDefault();
+        const withdrawAmount = document.getElementById('withdrawAmount').value;
+        try {
+            const response = await axios.post(`${baseURL}/withdraw`, { amount: withdrawAmount });
+            console.log(response.data);
+        } catch (error) {
+            console.error(error.response.data.error);
+        }
+    }
+
+    // Function to handle check balance form submission
+    async function handleCheckBalance(event) {
+        event.preventDefault();
+        try {
+            const response = await axios.get(`${baseURL}/balance`);
+            console.log(response.data);
+        } catch (error) {
+            console.error(error.response.data.error);
+        }
+    }
+
+    // Function to update displayed amount
+    function updateDisplayedAmount(amount) {
+        document.getElementById('currentAmount').textContent = `Current Amount: $${amount}`;
+    }
+</script>
+</html>
